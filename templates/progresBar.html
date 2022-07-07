@@ -1,37 +1,29 @@
+<!DOCTYPE html>
 <html>
-    <head>
-       <meta name="viewport" content="width=device-width, initial-scale=1">
-       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<body>
 
-       <script>
-         var interval = setInterval(update_progress, 1000);
-            function update_progress() {
-               $.get('/progress').done(function(n){
-                   console.log(n);
-                   n = n / 5;  // percent value
-                   if (n == 100) {
-                      clearInterval(interval);
-                   }
-                   $('.progress-bar').animate({'width': n +'%'}).attr('aria-valuenow', n);
-               }).fail(function() {
-                   clearInterval(interval);
-               });
-            }
-            $(function () {
-                $("#content").load("/progress");
-            });
-       </script>
+<h1>The progress element</h1>
 
-    </head>
-    <body>
-        <div class="container">
-           <h2>Progress Bar With Label</h2>
-           <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
-           </div>
-        </div>
-    </body>
+<label for="file">Downloading progress:</label>
+<progress id="progresBar" value="0" max="100"></progress>
+<script type="text/javascript">
+
+bar = document.getElementById("progresBar")
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+    for (let i = 0; i < 5; i++) {
+        await sleep(500);
+        bar.value = bar.value + 20
+    }
+    console.log('Done');
+}
+
+demo();
+
+</script>
+</body>
 </html>

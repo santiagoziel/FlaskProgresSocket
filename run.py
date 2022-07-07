@@ -26,19 +26,27 @@ def index():
         #dta = request.form
         filename = secure_filename(form.file.data.filename)
         form.file.data.save(app.config['UPLOAD_FOLDER'] + filename)
+        #gen an id numner
+        #here in reality in puting stuff into the db unde rthe id
+        socketio.emit("updateBar", 25)
+        time.sleep(1)
+        socketio.emit("updateBar", 50)
+        time.sleep(1)
+        socketio.emit("updateBar", 75)
+        time.sleep(1)
+        socketio.emit("updateBar", 100)
+        time.sleep(1)
 
-        socketio.emit("user acknowledgment", "inmediat")
-        time.sleep(1)
-        socketio.emit("user acknowledgment", "later")
-        time.sleep(1)
+        #plus the id number
         return "/progress"
     return render_template('index.html', form=form)
 
+#this takes in a id number
 @app.route('/progress')
 def ajax_index():
-    return "10"
+    #get that id numbe from the fb, is contains all the info needed to pass to the template
+    return render_template('progresBar.html')
 
-      # I want to load this in a progress bar
 
 if __name__ == "__main__":
     app.run(debug=True)
