@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="" method="post">
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname" value="John"><br>
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname" value="Doe"><br><br>
+      <input id= "submitbutton" type="button" value="send">
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf-8">
+    var socket = io();
+
+    socket.on('user acknowledgment', function(message){
+    console.log("client", message);
+    });
+    
+    elem = document.getElementById('submitbutton');
+    elem.onclick = function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/", true);
+      xhr.onreadystatechange = function() {
+         if (xhr.readyState === 4) {
+           location.href = xhr.response;
+         }
+       }
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+          fname: "john",
+          lname: "doe"
+      }));
+    };
+
+
+    </script>
+  </body>
+</html>
